@@ -1,7 +1,12 @@
+"""Author: Omkar Bahirat"""
+
+# Third party library imports
 import cv2 as cv
 import numpy as np
 import threading
 import datetime
+
+# Local application imports
 from storage import handle_detection
 
 class Camera:
@@ -62,12 +67,9 @@ class Camera:
                     now = datetime.datetime.now()
                     formatted_now = now.strftime("%d-%m-%y-%H-%M-%S")
                     print("Person motion detected at", formatted_now)
-                    
                     current_recording_name = f'{formatted_now}.mp4'
-                    path = "/Users/harshadatupe/Desktop/videos/" + current_recording_name
                     fourcc = cv.VideoWriter_fourcc(*'mp4v')  # or use 'XVID'
                     self.out = cv.VideoWriter(current_recording_name, fourcc, 20.0, (frame.shape[1], frame.shape[0]))
-                    # self.out = cv.VideoWriter(path, fourcc, 20.0, (frame.shape[1], frame.shape[0]))
 
                 # Write the frame into the file 'output.mp4'
                 self.out.write(frame)
@@ -80,7 +82,6 @@ class Camera:
                         self.out.release()
                         self.out = None  # set it back to None
                         handle_detection(current_recording_name)
-                        # handle_detection(path)
                         current_recording_name = None
                         
         if self.out is not None:  # if VideoWriter is initialized, release it
@@ -96,4 +97,3 @@ class Camera:
         self.cap.release()
         if self.out is not None:
             self.out.release()
-

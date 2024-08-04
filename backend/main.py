@@ -1,30 +1,32 @@
+"""Author: Harshada Tupe"""
+
+# Third party library imports
+from flask import Flask, jsonify, request
+
+# Local application imports
 from camera import Camera
 from notifications import send_notification
 from storage import list_videos_in_date_range
-from flask_cors import CORS
-from flask import Flask, jsonify, request
 
 
 app = Flask(__name__)
-CORS(app)
-
 camera = Camera()
 
-@app.route('/arm', methods=['POST'])
+@app.post('/arm')
 def arm():
     camera.arm()
     return jsonify(message="System armed."), 200
 
-@app.route('/disarm', methods=['POST'])
+@app.post('/disarm')
 def disarm():
     camera.disarm()
     return jsonify(message="System disarmed."), 200
 
-@app.route('/get-armed', methods=['GET'])
+@app.get('/get-armed')
 def get_armed():
     return jsonify(armed=camera.armed), 200
 
-@app.route('/motion_detected', methods=['POST'])
+@app.post('/motion_detected')
 def motion_detected():
     data = request.get_json()
 
