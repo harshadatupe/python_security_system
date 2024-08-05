@@ -43,20 +43,12 @@ def handle_detection(path_to_file):
     thread.start()
 
 
-def list_videos_in_date_range(start_date, end_date, extension=".mp4"):
-    # Convert the string dates to datetime objects
-    start_datetime = datetime.strptime(start_date, '%Y-%m-%d')
-    end_datetime = datetime.strptime(end_date, '%Y-%m-%d')
-
+def get_videos(extension=".mp4"):
     matching_videos = []
 
     # Iterate over the blobs (objects) in the bucket
     for blob in bucket.list_blobs():
         # Check if the blob name ends with the desired file extension
-        blob_created_naive = blob.time_created.replace(tzinfo=None)
-        if blob.name.endswith(extension):
-            # Check if blob creation date is within the desired range
-            if start_datetime <= blob_created_naive <= end_datetime:
-                matching_videos.append({"url": blob.public_url, "date": blob.time_created})
+        matching_videos.append({"url": blob.public_url, "date": blob.time_created})
     
     return matching_videos

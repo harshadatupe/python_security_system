@@ -15,15 +15,10 @@ A Python-based security system for real-time motion detection and video storage.
 Prerequisites:
 
 - Python 3.9+
-- Node.js
 - ffmpeg
 - Other python dependencies, you can install these by running: ``pip install -r requirements.txt`` from the root directory.
-- Run ``cd src/frontend && npm install``
 
 ## Execution
 
 - Running The Backend:
     ``cd src/backend && python main.py``
-
-- Running The Frontend:
-    ``cd src/frontend && npm start``
